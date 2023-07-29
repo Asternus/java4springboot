@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -40,7 +41,7 @@ public class TreeController {
     }
 
     @PostMapping("/add")
-    public String addBook(Tree tree) {
+    public String addBook(@Valid Tree tree) {
         tree.setIsGreen(true);
         treeService.saveTree(tree);
         return "redirect:/";
