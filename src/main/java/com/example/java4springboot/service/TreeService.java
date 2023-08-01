@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TreeService {
@@ -23,6 +24,14 @@ public class TreeService {
 
     public List<Tree> getTrees() {
         return treeRepo.findAll();
+    }
+
+    public Optional<Tree> getTreeById(final long id) {
+        return treeRepo.findById(id);
+    }
+
+    public void deleteTree(final Tree tree) {
+        treeRepo.delete(tree);
     }
 
 }
