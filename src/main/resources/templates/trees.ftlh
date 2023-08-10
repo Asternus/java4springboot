@@ -2,9 +2,8 @@
 
 <@c.page>
 
-    <div>
-        ${username}
-        ${email}
-    </div>
+    <#list trees as tree>
+        ${tree}
+    </#list>
 
 </@c.page>

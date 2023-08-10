@@ -1,26 +1,19 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+<#import "parts/common.ftlh" as c>
 
-${tree}
+<@c.page>
 
-<div class="form-row">
-    <div class="form-group col-md-6">
-        <form method="post" action="/edit/${id}" class="form-inline">
-            <input type="text" name="name" class="form-control" placeholder="tree name">
-            <input type="number" name="age" class="form-control" placeholder="age of tree">
+    ${tree}
 
-            <button type="submit" class="btn btn-primary ml-2">Edit new tree</button>
-        </form>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <form method="post" action="/edit/${id}" class="form-inline">
+                <input type="text" name="name" class="form-control" placeholder="tree name">
+                <input type="number" name="age" class="form-control" placeholder="age of tree">
+
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-primary ml-2">Edit new tree</button>
+            </form>
+        </div>
     </div>
-</div>
 
-</body>
-</html>
+</@c.page>

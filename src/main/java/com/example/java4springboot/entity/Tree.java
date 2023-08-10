@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -26,6 +23,9 @@ public class Tree {
     private long age;
 
     private Boolean isGreen;
+
+    @OneToOne
+    private User user;
 
     public Tree() {
     }
