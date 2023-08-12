@@ -4,12 +4,14 @@ import com.example.java4springboot.entity.Tree;
 import com.example.java4springboot.entity.User;
 import com.example.java4springboot.service.TreeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -27,7 +29,11 @@ public class TreeController {
     }
 
     @GetMapping()
-    public String getHome(Model model, @AuthenticationPrincipal User user) {
+    public String getHome(Model model,
+                          @AuthenticationPrincipal User user) {
+
+
+
         final List<Tree> trees = treeService.getTrees();
         model.addAttribute("trees", trees);
         if (Objects.nonNull(user)) {
@@ -35,6 +41,18 @@ public class TreeController {
             model.addAttribute("userId", user.getId());
         }
         return "index";
+    }
+
+    @GetMapping("/tree-page")
+    public String getAllTrees(Model model,
+                          @RequestParam(value = "page", defaultValue = "0") int page) {
+        int pageSize = 5;
+        Page<Tree> treePage = treeService.getTrees(page, pageSize);
+        model.addAttribute("treePage", treePage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", treePage.getTotalPages());
+
+        return "parts";
     }
 
     @GetMapping("/trees")

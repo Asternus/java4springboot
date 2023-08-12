@@ -5,7 +5,7 @@
 
     <div>
         <#if known>
-            Hello ${user.name}!
+            Hello ${user.getEmail()}!
         <#else>
             Hello unknown!
         </#if>

@@ -3,6 +3,9 @@ package com.example.java4springboot.service;
 import com.example.java4springboot.entity.Tree;
 import com.example.java4springboot.repo.TreeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +35,11 @@ public class TreeService {
 
     public void deleteTree(final Tree tree) {
         treeRepo.delete(tree);
+    }
+
+    public Page<Tree> getTrees(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        return treeRepo.findAll(pageable);
     }
 
 }
