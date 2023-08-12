@@ -1,16 +1,13 @@
 package com.example.java4springboot.config;
 
-import com.example.java4springboot.entity.Role;
 import com.example.java4springboot.entity.Tree;
 import com.example.java4springboot.entity.User;
 import com.example.java4springboot.service.TreeService;
 import com.example.java4springboot.service.UserService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Random;
-import java.util.Set;
 
 @Component
 public class DbInit {
@@ -41,6 +38,13 @@ public class DbInit {
         user.setUsername("cat");
         user.setPassword("cat");
 
-        userService.addUser(user);
+        userService.addUser(user, false);
+
+        final User admin = new User();
+        admin.setEmail("admin@gmail.com");
+        admin.setUsername("admin");
+        admin.setPassword("admin");
+
+        userService.addUser(admin, true);
     }
 }

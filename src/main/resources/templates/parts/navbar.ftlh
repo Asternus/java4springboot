@@ -13,6 +13,7 @@
                 <a class="nav-item nav-link" href="/tree">Trees</a>
                 <a class="nav-item nav-link" href="/tree-page">Pages</a>
                 <a class="nav-item nav-link" href="/logout">logout</a>
+                <a class="nav-item nav-link" href="/add-user-from-admin">Admin-panel</a>
                 <a class="nav-item nav-link" href="/user/profile">${name}</a>
             <#else>
                 <a class="nav-item nav-link" href="/registration">registration</a>

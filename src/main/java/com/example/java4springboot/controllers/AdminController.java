@@ -1,41 +1,36 @@
 package com.example.java4springboot.controllers;
 
-
 import com.example.java4springboot.entity.Role;
 import com.example.java4springboot.entity.User;
 import com.example.java4springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 
 @Controller
-public class RegistrationController {
+@PreAuthorize("hasAuthority('ADMIN')")
+public class AdminController {
 
-    private final UserService userService;
+    private UserService userService;
 
     @Autowired
-    public RegistrationController(UserService userService) {
+    public AdminController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/registration")
-    public String registration() {
-        return "registration";
+    @GetMapping("/add-user-from-admin")
+    public String addUserFromAdmin(@AuthenticationPrincipal User user) {
+        System.out.println(user);
+        return "userFromAdmin";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
-
-    @PostMapping("/registration")
+    @PostMapping("/registration-from-admin")
     public String registrationPost(@RequestParam String username,
                                    @RequestParam String password,
                                    @RequestParam String email) {
@@ -45,16 +40,7 @@ public class RegistrationController {
         user.setEmail(email);
         user.setRoles(Collections.singleton(Role.USER));
         userService.addUser(user, false);
-        return "redirect:/login";
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            request.getSession().invalidate();
-        }
-        return "redirect:/";
+        return "redirect:/userFromAdmin";
     }
 
 }
